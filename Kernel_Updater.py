@@ -3,9 +3,9 @@ import os
 
 # Variables - Changable
 KERNEL_VERSION = "4.19" # Set Kernel Version (4.4/4.14/4.19)
-KERNEL_TAG = "LA.UM.10.2.1.r1-03800-sdm660.0" # Set CAF Tag / Upstream Version (LA.UM.10.2.1.r1-0300-sdm660.0/v4.19.157)
-REPO_LINK = "https://github.com/iamimmanuelraj/android_kernel_xiaomi_jasmine_sprout" # Repo link to pull/fetch/push Kernel
-BASE_BRANCH = "BASE_3700" # Base branch to pick the old/device base changes from
+KERNEL_TAG = "LA.UM.8.13.r1-11900-SAIPAN.0" # Set CAF Tag / Upstream Version (LA.UM.10.2.1.r1-0300-sdm660.0/v4.19.157)
+REPO_LINK = "https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git" # Repo link to pull/fetch/push Kernel
+BASE_BRANCH = "gauguin-q-oss" # Base branch to pick the old/device base changes from
 
 # Variables - Non_Changable
 QCACLD_LINK = "https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0" # Qcacld repo link
@@ -15,7 +15,7 @@ AUDIO_TECHPACK_LINK = "https://git.codelinaro.org/clo/la/platform/vendor/opensou
 EXFAT_LINK = "https://github.com/arter97/exfat-linux" # Exfat repo link
 
 # Clone the kernel
-os.system("git clone https://git.codelinaro.org/clo/la/kernel/msm-%s -b %s %s"%(KERNEL_VERSION,KERNEL_TAG,KERNEL_TAG))
+os.system("git clone https://git.codelinaro.org/clo/le/kernel/msm-%s -b %s %s"%(KERNEL_VERSION,KERNEL_TAG,KERNEL_TAG))
 
 # Go into the folder
 os.chdir("%s"%(KERNEL_TAG))
@@ -43,10 +43,10 @@ os.system("git fetch %s %s"%(REPO_LINK,BASE_BRANCH))
 os.system("git cherry-pick 99fe732f5ba079d53fab3dc19c756ae843a54f98^..7e53c259a9f6a21fb3ba78c2c9759ecd80603aef")
 
 # Change Localversion in defconfig (Add defconfig paths for your devices)
-DEFCONFIG = open("arch/arm64/configs/vendor/jasmine_sprout_defconfig", "r")
+DEFCONFIG = open("arch/arm64/configs/vendor/gauguin_user_defconfig", "r")
 NUMBER_OF_LINES = DEFCONFIG.readlines()
 NUMBER_OF_LINES[0] = '''CONFIG_LOCALVERSION="-%s"\n'''%KERNEL_TAG
-DEFCONFIG = open("arch/arm64/configs/vendor/jasmine_sprout_defconfig", "w")
+DEFCONFIG = open("arch/arm64/configs/vendor/gauguin_user_defconfig", "w")
 DEFCONFIG.writelines(NUMBER_OF_LINES)
 DEFCONFIG.close()
 DEFCONFIG = open("arch/arm64/configs/vendor/jasmine_sprout-debug_defconfig", "r")
